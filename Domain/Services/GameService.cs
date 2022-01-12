@@ -13,8 +13,6 @@ using System.Threading.Tasks;
 
 namespace Domain.Services
 {
-    
-
     public class GameService : IGameService
     {
         private readonly IChesscomRepository _chesscomRepository;

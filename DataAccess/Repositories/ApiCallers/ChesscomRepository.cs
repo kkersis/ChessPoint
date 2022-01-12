@@ -14,9 +14,9 @@ namespace DataAccess.Repositories.ApiCallers
     public class ChesscomRepository : IChesscomRepository
     {
         private readonly ApiSettings _api;
-        private readonly ILogger _logger;
+        private readonly ILogger<ChesscomRepository> _logger;
 
-        public ChesscomRepository(ApiSettings api, ILogger logger)
+        public ChesscomRepository(ApiSettings api, ILogger<ChesscomRepository> logger)
         {
             _api = api;
             _logger = logger;

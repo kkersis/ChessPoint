@@ -15,9 +15,9 @@ namespace DataAccess.Repositories.ApiCallers
     public class LichessRepository : ILichessRepository
     {
         private readonly ApiSettings _api;
-        private readonly ILogger _logger;
+        private readonly ILogger<LichessRepository> _logger;
 
-        public LichessRepository(ApiSettings api, ILogger logger)
+        public LichessRepository(ApiSettings api, ILogger<LichessRepository> logger)
         {
             _api = api;
             _logger = logger;

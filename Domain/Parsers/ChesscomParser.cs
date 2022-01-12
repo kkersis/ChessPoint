@@ -13,9 +13,9 @@ namespace Domain.Parsers
     public class ChesscomParser : IChesscomParser
     {
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<ChesscomParser> _logger;
 
-        public ChesscomParser(IMapper mapper, ILogger logger)
+        public ChesscomParser(IMapper mapper, ILogger<ChesscomParser> logger)
         {
             _mapper = mapper;
             _logger = logger;

@@ -18,12 +18,10 @@ namespace API.Controllers
     public class GameController : ControllerBase
     {
         private readonly IGameService _gameService;
-        private readonly ILogger<GameController> _logger;
 
-        public GameController(IGameService gameService, ILogger<GameController> logger)
+        public GameController(IGameService gameService)
         {
             _gameService = gameService;
-            _logger = logger;
         }
 
         // returns all games from chess.com and lichess of given user
