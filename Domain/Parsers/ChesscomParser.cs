@@ -2,6 +2,7 @@
 using Core.Entities;
 using Core.Enums;
 using Domain.Models;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace Domain.Parsers
     public class ChesscomParser : IChesscomParser
     {
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public ChesscomParser(IMapper mapper)
+        public ChesscomParser(IMapper mapper, ILogger logger)
         {
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<Game>> ParseGamesAsync(IEnumerable<ChesscomGame> chesscomGames, string username)
@@ -48,13 +51,13 @@ namespace Domain.Parsers
             return games;
         }
 
-        private static async Task<OpeningInfo> GetOpeningInfoAsync(string pgn)
+        private async Task<OpeningInfo> GetOpeningInfoAsync(string pgn)
         {
             return await Task.Run(() => GetOpeningInfo(pgn));
         }
 
         // gets opening info from chess.com pgn string
-        private static OpeningInfo GetOpeningInfo(string pgn)
+        private OpeningInfo GetOpeningInfo(string pgn)
         {
             string[] tLines = pgn.Split('\n');
             string eco;
@@ -66,7 +69,7 @@ namespace Domain.Parsers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogError(e.StackTrace);
                 eco = null;
             }
 
@@ -77,7 +80,7 @@ namespace Domain.Parsers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogError(e.StackTrace);
                 name = null;
             }
 

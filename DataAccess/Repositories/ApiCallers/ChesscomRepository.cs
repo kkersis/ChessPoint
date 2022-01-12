@@ -1,5 +1,6 @@
 ﻿using Core;
 using Core.Entities;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,12 @@ namespace DataAccess.Repositories.ApiCallers
     public class ChesscomRepository : IChesscomRepository
     {
         private readonly ApiSettings _api;
+        private readonly ILogger _logger;
 
-        public ChesscomRepository(ApiSettings api)
+        public ChesscomRepository(ApiSettings api, ILogger logger)
         {
             _api = api;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<ChesscomGame>> GetAllChesscomAsync(string username)
@@ -43,10 +46,9 @@ namespace DataAccess.Repositories.ApiCallers
                     return games;
                 }
             }
-            catch (Exception exception)
+            catch (Exception e)
             {
-                Console.WriteLine("Exception Hit------------");
-                Console.WriteLine(exception);
+                _logger.LogError(e.StackTrace);
             }
             return null;
         }
@@ -68,9 +70,9 @@ namespace DataAccess.Repositories.ApiCallers
                     return games;
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine(ex);
+                _logger.LogError(e.StackTrace);
             }
             return null;
         }

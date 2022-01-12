@@ -9,6 +9,7 @@ using Domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace API.Controllers
 {
@@ -17,18 +18,18 @@ namespace API.Controllers
     public class GameController : ControllerBase
     {
         private readonly IGameService _gameService;
+        private readonly ILogger<GameController> _logger;
 
-        public GameController(IGameService gameService)
+        public GameController(IGameService gameService, ILogger<GameController> logger)
         {
             _gameService = gameService;
+            _logger = logger;
         }
 
         // returns all games from chess.com and lichess of given user
         [HttpGet("{chesscomusr}/{lichessusr}/games")]
         public async Task<IActionResult> GetAllGamesAsync(string chesscomusr, string lichessusr)
         {
-            Console.WriteLine("In GetAllGamesAsync");
-
             var games = await _gameService.GetAllAsync(chesscomusr, lichessusr);
 
             if(games == null)
