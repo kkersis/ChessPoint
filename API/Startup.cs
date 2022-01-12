@@ -45,6 +45,7 @@ namespace API
             services.AddScoped<IChesscomParser, ChesscomParser>();
             services.AddScoped<IChesscomRepository, ChesscomRepository>();
             services.AddScoped<ILichessRepository, LichessRepository>();
+            services.AddCors();
 
             var mapperConfig = new MapperConfiguration(mc =>
             {
@@ -74,6 +75,11 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthorization();
 
