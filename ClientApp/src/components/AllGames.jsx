@@ -14,7 +14,8 @@ export class AllGames extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { games: [], loading: true };
+        this.state = { games: [], loading: true, showGames: false, 
+            chesscomInput: '', lichessInput: ''};
     }
 
     componentDidMount() {
@@ -22,18 +23,6 @@ export class AllGames extends Component {
     }
 
     renderGames() {
-        // return this.state.games.map((game, index) => (
-        //     <div style={{backgroundColor: this.getBgColor(game)}}>
-        //         {index+1}{' '}
-        //         {game.serverType === "CHESS.COM" ? "CHESS.COM " : "LICHESS " }
-        //         <a href={game.url}>{new Date(game.date).toLocaleDateString()}</a>{' '}
-        //         {game.opening.name}
-        //         {game.me.username}
-        //         {game.opponent.username}
-        //         {game.ending}
-        //     </div>
-        // ))
-        console.log(this.state.games)
         let renderableGames = this.state.games.map((game, index) => (
             {
                 timeClass: game.timeClass,
@@ -46,7 +35,6 @@ export class AllGames extends Component {
                 url: game.url
             }
         ))
-        console.log(renderableGames)
         const columns = [
                 {
                     Cell: timeClassCell =>{
@@ -121,23 +109,39 @@ export class AllGames extends Component {
             return 'gray';
     }
 
+    handleSubmit = (event) =>{
+        event.preventDefault();
+        this.setState({chesscomInput: event.target.chesscomInput.value,
+                       lichessInput: event.target.lichessInput.value,
+                       showGames: true, loading:true}, this.FetchAllGames);
+    }
+
     render() {
-        let contents = this.state.loading
+        let allGames;
+        if(this.state.showGames){
+            allGames = this.state.loading
             ? <p><em>Loading...</em></p>
             : this.renderGames()
+        }
 
         return (
             <div>
                 <h1 id="tabelLabel" >All games</h1>
-                {contents}
+                <form onSubmit={this.handleSubmit}>
+                    <label>Chess.com username</label>
+                    <input name='chesscomInput'/><br/>
+                    <label>Lichess username</label>
+                    <input name='lichessInput'/><br/>
+                    <button type='submit'>Show</button>
+                </form>
+                {allGames}
             </div>
         );
     }
 
     async FetchAllGames() {
         try{
-            //const response = await fetch(process.env.REACT_APP_API_URL + "game/nealkoholins/loki55/games");
-            const response = await fetch(process.env.REACT_APP_API_URL + "game/spalio29/kkersis/games");
+            const response = await fetch(process.env.REACT_APP_API_URL + `game/${this.state.chesscomInput}/${this.state.lichessInput}/games`);
             const data = await response.json();
             this.setState({ games: data, loading: false });
         }
