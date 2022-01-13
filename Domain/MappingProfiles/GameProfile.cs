@@ -9,16 +9,16 @@ namespace Domain.MappingProfiles
     {
         public GameProfile()
         {
+            // chess.com
+            CreateMap<ChesscomGame, Game>()
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.EndTime));
             CreateMap<ChessComPlayer, GamePlayer>();
+
+            // lichess
+            CreateMap<LichessGame, Game>();
             CreateMap<LichessPlayer, GamePlayer>()
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username));
-            CreateMap<LichessGame, Game>();
-            CreateMap<ChesscomGame, Game>()
-                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.EndTime))
-                .ForMember(dest => dest.Me, opt =>
-                        opt.MapFrom(src => src.MyColor == ColorType.WHITE ? src.WhitePlayer : src.BlackPlayer))
-                .ForMember(dest => dest.Opponent, opt =>
-                        opt.MapFrom(src => src.MyColor == ColorType.WHITE ? src.BlackPlayer : src.WhitePlayer));
+            
         }
     }
 }

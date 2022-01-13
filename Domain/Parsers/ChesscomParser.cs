@@ -42,10 +42,16 @@ namespace Domain.Parsers
             {
                 var chesscomGame = chesscomGames.ElementAt(i);
                 var game = _mapper.Map<Game>(chesscomGame);
+                game.Opening = openingTasks[i].Result;
+                game.Ending = FindEnding(chesscomGame, username);
+                game.MyColor = FindMyColor(chesscomGame, username);
+                game.Me = game.MyColor == ColorType.WHITE ?
+                    ConvertToGamePlayer(chesscomGame.WhitePlayer) :
+                    ConvertToGamePlayer(chesscomGame.BlackPlayer);
+                game.Opponent = game.MyColor == ColorType.WHITE ?
+                    ConvertToGamePlayer(chesscomGame.BlackPlayer) :
+                    ConvertToGamePlayer(chesscomGame.WhitePlayer);
                 games.Add(game);
-                games.ElementAt(i).Opening = openingTasks[i].Result;
-                games.ElementAt(i).Ending = FindEnding(chesscomGame, username);
-                games.ElementAt(i).MyColor = FindMyColor(chesscomGame, username);
             }
 
             return games;
@@ -54,6 +60,11 @@ namespace Domain.Parsers
         private async Task<OpeningInfo> GetOpeningInfoAsync(string pgn)
         {
             return await Task.Run(() => GetOpeningInfo(pgn));
+        }
+
+        private GamePlayer ConvertToGamePlayer(ChessComPlayer player)
+        {
+            return _mapper.Map<GamePlayer>(player);
         }
 
         // gets opening info from chess.com pgn string
