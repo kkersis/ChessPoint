@@ -11,10 +11,6 @@ export class AllGames extends Component {
             chesscomInput: '', lichessInput: ''};
     }
 
-    componentDidMount() {
-        this.FetchAllGames();
-    }
-
     renderGames() {
         let renderableGames = this.state.games.map((game, index) => (
             {
@@ -58,10 +54,9 @@ export class AllGames extends Component {
             return 'gray';
     }
 
-    handleSubmit = (event) =>{
-        event.preventDefault();
-        this.setState({chesscomInput: event.target.chesscomInput.value,
-                       lichessInput: event.target.lichessInput.value,
+    handleSubmitSuccess = (chesscomInput, lichessInput) =>{
+        this.setState({chesscomInput: chesscomInput,
+                       lichessInput: lichessInput,
                        showGames: true, loading:true}, this.FetchAllGames);
     }
 
@@ -76,7 +71,7 @@ export class AllGames extends Component {
         return (
             <div>
                 <h1 id="tabelLabel" >All games</h1>
-                <ShowGamesForm onSubmit={this.handleSubmit}/>
+                <ShowGamesForm onSubmitSuccess={this.handleSubmitSuccess}/>
                 {allGames}
             </div>
         );
