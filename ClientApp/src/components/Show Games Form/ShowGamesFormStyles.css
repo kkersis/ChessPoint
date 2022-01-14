@@ -1,0 +1,11 @@
+@import "../../colors.css";
+
+input{
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+button{
+    background-color: var(--secondary-color);
+    border-radius: 3px;
+
+}

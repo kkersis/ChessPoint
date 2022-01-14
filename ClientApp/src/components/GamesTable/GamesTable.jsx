@@ -3,8 +3,8 @@ import React from 'react'
 import './Table.css'
 import Square from './Square';
 import ResultIcon from './ResultIcon';
-import ChesscomLogo from './ChesscomLogo';
-import LichessLogo from './LichessLogo';
+import ChesscomLogo from '../Shared Icons/ChesscomLogo';
+import LichessLogo from '../Shared Icons/LichessLogo';
 import BulletIcon from './BulletIcon';
 import RapidIcon from './RapidIcon';
 import BlitzIcon from './BlitzIcon';
@@ -24,8 +24,8 @@ function Table({data, getRowProps}) {
         },
         {
             Cell: serverCell => {
-                if(serverCell.value == 0) return <ChesscomLogo />
-                else if(serverCell.value == 1) return <LichessLogo />
+                if(serverCell.value == 0) return <ChesscomLogo width='30px' height='30px' />
+                else if(serverCell.value == 1) return <LichessLogo width='30px' height='30px'/>
                 else return 'UNKNOWN'
             },
             Header: 'Server',

@@ -1,9 +1,9 @@
 import React from 'react'
 import chesscomlogo from '../../assets/chesscomlogo.png'
 
-function ChesscomLogo() {
+function ChesscomLogo({width, height}) {
     return (
-        <img src={chesscomlogo} title='chess.com'/>
+        <img style={{width: width, height: height}} src={chesscomlogo} title='chess.com'/>
     )
 }
 

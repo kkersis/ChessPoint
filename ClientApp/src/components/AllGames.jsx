@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import Table from './GamesTable/GamesTable';
+import ShowGamesForm from './Show Games Form/ShowGamesForm';
 
 export class AllGames extends Component {
     static displayName = AllGames.name;
@@ -75,13 +76,7 @@ export class AllGames extends Component {
         return (
             <div>
                 <h1 id="tabelLabel" >All games</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <label>Chess.com username</label>
-                    <input name='chesscomInput'/><br/>
-                    <label>Lichess username</label>
-                    <input name='lichessInput'/><br/>
-                    <button type='submit'>Show</button>
-                </form>
+                <ShowGamesForm onSubmit={this.handleSubmit}/>
                 {allGames}
             </div>
         );
